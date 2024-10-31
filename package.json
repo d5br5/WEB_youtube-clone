@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/d5br5/WEB_youtube-clone/issues"
   },
-  "homepage": "https://github.com/d5br5/WEB_youtube-clone#readme"
+  "homepage": "https://github.com/d5br5/WEB_youtube-clone#readme",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
 }
