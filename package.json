@@ -4,7 +4,8 @@
   "description": "the best way to watch videos",
   "main": "index.js",
   "scripts": {
-    "win": "node index.js"
+    "win": "node index.js",
+    "dev": "nodemon --exec babel-node src/server.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,11 @@
   "homepage": "https://github.com/d5br5/WEB_youtube-clone#readme",
   "dependencies": {
     "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/node": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "nodemon": "^3.1.7"
   }
 }
