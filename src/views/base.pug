@@ -9,12 +9,13 @@ html(lang="ko")
         ul 
           li
             a(href="/") Home
-          li
-            a(href="/join") Join
-          li
-            if user.loggedIn
+          if user.loggedIn
+            li
+              a(href="/video/upload") Upload
+            li 
               a(href="/logout") Logout
-            else
+          else 
+            li
               a(href="/login") Login
       h1=title
     main
