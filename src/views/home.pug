@@ -1,9 +1,9 @@
-extends base.pug
+extends base
+include mixins/video
 
 block content
   ul
-    each video in videos
-      li 
-        a(href=`/video/${video.id}`)= video.title
+    each potato in videos
+      +video(potato)
     else
       li Sorry no videos found
