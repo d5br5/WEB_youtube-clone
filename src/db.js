@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Video from "./models/Video";
 
 const DB_PORT = 27017;
 
