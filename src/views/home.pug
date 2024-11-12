@@ -1,1 +1,9 @@
 extends base.pug
+
+block content
+  ul
+    each video in videos
+      li 
+        a(href=`/video/${video.id}`)= video.title
+    else
+      li Sorry no videos found

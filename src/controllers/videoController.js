@@ -4,7 +4,32 @@ const fakeUser = {
 };
 
 export const trending = (req, res) => {
-  const videos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const videos = [
+    {
+      title: "First Video",
+      rating: 5,
+      comments: 2,
+      createdAt: "2 minutes ago",
+      views: 59,
+      id: 1,
+    },
+    {
+      title: "Second Video",
+      rating: 5,
+      comments: 1,
+      createdAt: "2 minutes ago",
+      views: 59,
+      id: 2,
+    },
+    {
+      title: "Third Video",
+      rating: 5,
+      comments: 3,
+      createdAt: "2 minutes ago",
+      views: 59,
+      id: 3,
+    },
+  ];
   return res.render("home", {
     title: "Home",
     h1: "Welcome Wetube Page!",
@@ -16,7 +41,7 @@ export const trending = (req, res) => {
 export const see = (req, res) => {
   return res.render("watch", {
     title: "Watch",
-    h1: "Watch Video Page",
+    h1: `Watch Video (id: ${req.params.id})`,
     user: fakeUser,
   });
 };
