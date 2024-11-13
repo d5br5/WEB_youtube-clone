@@ -1,9 +1,11 @@
 extends base
 
 block content
-  h4 Change Title of  video: #{video.title}
+  h4 Change Title of  video
   if errorMessage
     span=errorMessage
   form(method="POST", )
-    input(placeholder="Video Title", type="text", name="title", value=video.title required)
+    input(placeholder="Title", name="title", required, type="text", minlength=5, maxlength=80, value=video.title )
+    input(placeholder="Description", name="description", required, type="text", minlength=20, maxlength=140, value=video.description)
+    input(placeholder="Hashtags, separated by comma.", name="hashtags", required, type="text", value=video.hashtags.map(item=>item.slice(1)).join(","))
     input(type="submit", value="Save")

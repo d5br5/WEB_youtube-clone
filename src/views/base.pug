@@ -9,14 +9,15 @@ html(lang="ko")
         ul 
           li
             a(href="/") Home
-          if user.loggedIn
-            li
-              a(href="/video/upload") Upload
-            li 
-              a(href="/logout") Logout
-          else 
-            li
-              a(href="/login") Login
+          if user
+            if user.loggedIn
+              li
+                a(href="/video/upload") Upload
+              li 
+                a(href="/logout") Logout
+            else 
+              li
+                a(href="/login") Login
       h1=title
     main
       block content

@@ -1,5 +1,11 @@
 extends base.pug
 block content
-  h1 #{video.title} (id: #{video.id})
-  h3 #{video.views} view#{video.views == 1 ? '' : 's'}
+  h1=video.title
+  h2=video.id
+  small=video.createdAt
+  h3 #{video.meta.views} view#{video.meta.views == 1 ? '' : 's'}
+  ul
+    each hashtag in video.hashtags
+      li=hashtag
   a(href=`${video.id}/edit`) Edit Video &rarr;
+  

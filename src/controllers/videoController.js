@@ -9,8 +9,7 @@ export const home = async (req, res) => {
   try {
     const videos = await Video.find({});
     return res.render("home", {
-      title: "Home",
-      h1: "Welcome Wetube Page!",
+      title: "Wetube Home",
       user: fakeUser,
       videos,
     });
@@ -20,41 +19,44 @@ export const home = async (req, res) => {
 };
 
 export const watch = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const video = await Video.findById(id);
-    return res.render("watch", {
-      title: "Watching Video",
-      user: fakeUser,
-      video,
-    });
-  } catch (e) {
-    return res.render("server-error");
+  const { id } = req.params;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.render("404", { title: "Video not found." });
   }
+  return res.render("watch", {
+    title: "Watching Video",
+    user: fakeUser,
+    video,
+  });
 };
 
 export const getEdit = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const video = await Video.findById(id);
-
-    return res.render("edit", {
-      title: `Editing`,
-      h1: `Edit video`,
-      user: fakeUser,
-      video,
-    });
-  } catch (e) {
+  const { id } = req.params;
+  const video = await Video.findById(id);
+  if (!video) {
     return res.status(404).render("404", { title: "Video not found." });
   }
+
+  return res.render("edit", {
+    title: `Editing: ${video.title}`,
+    user: fakeUser,
+    video,
+  });
 };
 
 export const postEdit = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { title } = req.body;
+    const { title, description, hashtags } = req.body;
     await Video.findByIdAndUpdate(id, {
       title,
+      description,
+      hashtags: hashtags
+        .split(",")
+        .map((word) => word.trim()) // 콤마 앞뒤의 공백 제거
+        .filter((word) => word.length > 0) // 빈 문자열 제외
+        .map((word) => `#${word}`), // 해시태그 처리
     });
     return res.redirect(`/video/${id}`);
   } catch (e) {
