@@ -49,14 +49,14 @@ export const postEdit = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { title, description, hashtags } = req.body;
+    const exist = await Video.exists({ _id: id });
+    if (!exist) {
+      return res.status(404).render("404", { title: "Video not found." });
+    }
     await Video.findByIdAndUpdate(id, {
       title,
       description,
-      hashtags: hashtags
-        .split(",")
-        .map((word) => word.trim()) // 콤마 앞뒤의 공백 제거
-        .filter((word) => word.length > 0) // 빈 문자열 제외
-        .map((word) => `#${word}`), // 해시태그 처리
+      hashtags,
     });
     return res.redirect(`/video/${id}`);
   } catch (e) {
@@ -79,11 +79,7 @@ export const postUpload = async (req, res) => {
     await Video.create({
       title,
       description,
-      hashtags: hashtags
-        .split(",")
-        .map((word) => word.trim()) // 콤마 앞뒤의 공백 제거
-        .filter((word) => word.length > 0) // 빈 문자열 제외
-        .map((word) => `#${word}`), // 해시태그 처리
+      hashtags,
     });
     return res.redirect("/");
   } catch (e) {

@@ -23,6 +23,14 @@ const videoSchema = new mongoose.Schema({
   },
 });
 
+videoSchema.pre("save", async function () {
+  this.hashtags = this.hashtags[0]
+    .split(",")
+    .map((word) => word.trim()) // 콤마 앞뒤의 공백 제거
+    .filter((word) => word.length > 0) // 빈 문자열 제외
+    .map((word) => `#${word}`); // 해시태그 처리
+});
+
 const Video = mongoose.model("Video", videoSchema);
 
 export default Video;
