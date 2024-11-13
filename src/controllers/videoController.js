@@ -19,26 +19,52 @@ export const home = async (req, res) => {
   }
 };
 
-export const watch = (req, res) => {
-  const { id } = req.params;
-  return res.render("watch", {
-    title: "Watching Video",
-    user: fakeUser,
-  });
+export const watch = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const video = await Video.findById(id);
+    return res.render("watch", {
+      title: "Watching Video",
+      user: fakeUser,
+      video,
+    });
+  } catch (e) {
+    return res.render("server-error");
+  }
 };
 
-export const getEdit = (req, res) => {
-  const { id } = req.params;
-  return res.render("edit", {
-    title: `Editing`,
-    h1: `Edit video`,
-    user: fakeUser,
-  });
+export const getEdit = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const video = await Video.findById(id);
+
+    return res.render("edit", {
+      title: `Editing`,
+      h1: `Edit video`,
+      user: fakeUser,
+      video,
+    });
+  } catch (e) {
+    return res.status(404).render("404", { title: "Video not found." });
+  }
 };
 
-export const postEdit = (req, res, next) => {
-  const { id } = req.params;
-  return res.redirect(`/video/${id}`);
+export const postEdit = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { title } = req.body;
+    await Video.findByIdAndUpdate(id, {
+      title,
+    });
+    return res.redirect(`/video/${id}`);
+  } catch (e) {
+    return res.status(400).render("edit", {
+      title: `Editing`,
+      h1: `Edit video`,
+      user: fakeUser,
+      errorMessage: e._message,
+    });
+  }
 };
 
 export const getUpload = (req, res) => {
