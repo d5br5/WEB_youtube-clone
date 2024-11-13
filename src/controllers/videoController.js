@@ -38,7 +38,6 @@ export const getEdit = (req, res) => {
 
 export const postEdit = (req, res, next) => {
   const { id } = req.params;
-  const { title } = req.body;
   return res.redirect(`/video/${id}`);
 };
 
@@ -46,10 +45,25 @@ export const getUpload = (req, res) => {
   return res.render("upload", { user: fakeUser, title: "Upload Video" });
 };
 
-export const postUpload = (req, res) => {
-  // here we will add a video to the videos array
-  const { title } = req.body;
-  return res.redirect("/");
+export const postUpload = async (req, res) => {
+  const { title, description, hashtags } = req.body;
+  try {
+    await Video.create({
+      title,
+      description,
+      hashtags: hashtags
+        .split(",")
+        .map((word) => word.trim()) // 콤마 앞뒤의 공백 제거
+        .filter((word) => word.length > 0) // 빈 문자열 제외
+        .map((word) => `#${word}`), // 해시태그 처리
+    });
+    return res.redirect("/");
+  } catch (e) {
+    return res.render("upload", {
+      title: "Upload Video",
+      errorMessage: e._message,
+    });
+  }
 };
 
 export const remove = (req, res) => {
