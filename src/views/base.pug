@@ -11,15 +11,11 @@ html(lang="ko")
             a(href="/") Home
           li
             a(href="/search") Search
-          if user
-            if user.loggedIn
-              li
-                a(href="/video/upload") Upload
-              li 
-                a(href="/logout") Logout
-            else 
-              li
-                a(href="/login") Login
+          li
+            a(href="/video/upload") Upload
+          li
+            a(href="/join") Join
+       
       h1=title
     main
       block content
