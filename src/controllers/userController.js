@@ -23,5 +23,14 @@ export const getLogin = async (req, res) => {
 };
 
 export const postLogin = async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(400).render("login", {
+      errorMessage: "An account with this email does not exists.",
+    });
+  }
+  // const hashedPassword = bcrypt.compare(password, user.password);
+
   return res.redirect("/");
 };
