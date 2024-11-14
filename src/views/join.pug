@@ -1,11 +1,14 @@
 extends base
 
 block content
+  if errorMessage
+    span=errorMessage 
   form(method="POST")
-    input(placeholder="Name", type="text", name="name", required)
-    input(placeholder="Username", type="text", name="username", required)
-    input(placeholder="Location", type="text", name="location", required)
-    input(placeholder="Email", type="email", name="email", required)
-    input(placeholder="Password", type="password", name="password", required)
-    //- input(placeholder="Password Confirmation", type="password", name="passwordConfirmation", required)
+    input(placeholder="Name", type="text", name="name", required, autocomplete="new-password")
+    input(placeholder="Username", type="text", name="username", required, autocomplete="new-password")
+    input(placeholder="Location", type="text", name="location", required, autocomplete="new-password")
+    input(placeholder="Email", type="email", name="email", required, autocomplete="new-password")
+    input(placeholder="Password", type="password", name="password", required, autocomplete="new-password")
+    input(placeholder="Password Confirmation", type="password", name="password2", required, autocomplete="new-password")
     input(type="submit", value="Join")
+  
