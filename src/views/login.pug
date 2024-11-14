@@ -4,9 +4,10 @@ block content
   form(method="POST")
     if errorMessage
       span=errorMessage
-    input(placeholder="Email", type="email", name="email", required)
+    input(placeholder="Username", type="text", name="username", required)
     input(placeholder="Password", type="password", name="password", required)
     input(type="submit", value="Log In")
+  hr
   span
     | Don't have an account? 
     a(href="/join") Join now!

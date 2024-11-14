@@ -1,4 +1,5 @@
 import User from "../models/User";
+import bcrypt from "bcrypt";
 
 export const login = (req, res) => res.send("Login");
 export const edit = (req, res) => res.send("Edit User");
@@ -29,8 +30,15 @@ export const postJoin = async (req, res) => {
     });
   }
 
-  await User.create({ email, username, password, name, location });
-  return res.redirect("/login");
+  try {
+    await User.create({ email, username, password, name, location });
+    return res.redirect("/login");
+  } catch (e) {
+    return res.status(400).render("join", {
+      title,
+      errorMessage: e._message,
+    });
+  }
 };
 
 export const getLogin = async (req, res) => {
@@ -40,14 +48,22 @@ export const getLogin = async (req, res) => {
 };
 
 export const postLogin = async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const { username, password } = req.body;
+  const user = await User.findOne({ username });
   if (!user) {
     return res.status(400).render("login", {
-      errorMessage: "An account with this email does not exists.",
+      title: "Login",
+      errorMessage: "An account with this username does not exists.",
     });
   }
-  // const hashedPassword = bcrypt.compare(password, user.password);
+
+  const ok = await bcrypt.compare(password, user.password);
+  if (!ok) {
+    return res.status(400).render("login", {
+      title: "Login",
+      errorMessage: "Wrong password",
+    });
+  }
 
   return res.redirect("/");
 };
