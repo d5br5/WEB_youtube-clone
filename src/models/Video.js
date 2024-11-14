@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
 
+const formatHashtags = (hashtagString) =>
+  hashtagString
+    .split(",")
+    .map((word) => word.trim()) // 콤마 앞뒤의 공백 제거
+    .filter((word) => word.length > 0) // 빈 문자열 제외
+    .map((word) => `#${word}`); // 해시태그 처리
+
 const videoSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -23,13 +30,15 @@ const videoSchema = new mongoose.Schema({
   },
 });
 
-videoSchema.pre("save", async function () {
-  this.hashtags = this.hashtags[0]
-    .split(",")
-    .map((word) => word.trim()) // 콤마 앞뒤의 공백 제거
-    .filter((word) => word.length > 0) // 빈 문자열 제외
-    .map((word) => `#${word}`); // 해시태그 처리
-});
+// videoSchema.pre("save", function () {
+//   this.hashtags = formatHashtags(this.hashtags[0]);
+// });
+
+// videoSchema.pre("findOneAndUpdate", function () {
+//   this._update.hashtags = formatHashtags(this._update.hashtags);
+// });
+
+videoSchema.static("formatHashtags", formatHashtags);
 
 const Video = mongoose.model("Video", videoSchema);
 
