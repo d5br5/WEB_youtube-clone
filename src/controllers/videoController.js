@@ -7,7 +7,7 @@ const fakeUser = {
 
 export const home = async (req, res) => {
   try {
-    const videos = await Video.find({});
+    const videos = await Video.find({}).sort({ createdAt: "desc" });
     return res.render("home", {
       title: "Wetube Home",
       user: fakeUser,
@@ -90,8 +90,14 @@ export const postUpload = async (req, res) => {
   }
 };
 
-export const remove = (req, res) => {
-  return res.send("Remove Video");
+export const deleteVideo = async (req, res) => {
+  const { id } = req.params;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.status(404).render("404", { title: "Video not found." });
+  }
+  await Video.findByIdAndDelete(id);
+  return res.redirect("/");
 };
 
 export const search = (req, res) => {
