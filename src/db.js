@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 
-const DB_PORT = 27017;
-
-export const dbURL = `mongodb://127.0.0.1:${DB_PORT}/wetube`;
+const dbURL = process.env.DB_URL;
 
 mongoose.connect(dbURL);
 

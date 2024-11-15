@@ -7,7 +7,6 @@ import { rootRouter } from "./routers/rootRouter";
 import { userRouter } from "./routers/userRouter";
 import { videoRouter } from "./routers/videoRouter";
 import { localsMiddleware } from "./middlewares";
-import { dbURL } from "./db";
 
 const app = express();
 const logger = morgan("dev");
@@ -19,10 +18,13 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: "dohkimsecret",
-    resave: true,
-    saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: dbURL }),
+    secret: process.env.COOKIE_SECRET,
+    cookie: {
+      maxAge: 20 * 60 * 1000, // 20분
+    },
+    resave: false, //
+    saveUninitialized: false, // 새로운 세션이 있는데 수정되지 않으면 저장하지 않음
+    store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
 
