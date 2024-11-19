@@ -1,7 +1,6 @@
 import User from "../models/User";
 import bcrypt from "bcrypt";
 
-export const edit = (req, res) => res.send("Edit User");
 export const see = (req, res) => res.send("See User");
 
 export const logout = (req, res) => {
@@ -154,4 +153,12 @@ export const finishGithubLogin = async (req, res) => {
   } else {
     return res.redirect("/login");
   }
+};
+
+export const getEdit = (req, res) => {
+  return res.render("edit-profile", { title: "Edit Profile" });
+};
+
+export const postEdit = (req, res) => {
+  return res.render("edit-profile", { title: "Edit Profile" });
 };
