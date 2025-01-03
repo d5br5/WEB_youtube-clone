@@ -11,11 +11,12 @@ html(lang="ko")
             a(href="/") Home
           li
             a(href="/search") Search
-          li
-            a(href="/video/upload") Upload
+          
           if loggedIn
             li
               a(href="/logout") Logout
+            li
+              a(href="/video/upload") Upload
             li
               a(href="/user/edit") Edit Profile
           else
