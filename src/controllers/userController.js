@@ -1,4 +1,5 @@
 import User from "../models/User";
+import Video from "../models/Video";
 import bcrypt from "bcrypt";
 
 export const see = async (req, res) => {
@@ -9,7 +10,9 @@ export const see = async (req, res) => {
     return res.status(404).render("404", { title: "User not found." });
   }
 
-  return res.render("profile", { title: user.name, user });
+  const videos = await Video.find({ owner: user._id });
+
+  return res.render("profile", { title: user.name, user, videos });
 };
 
 export const logout = (req, res) => {
