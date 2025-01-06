@@ -1,14 +1,16 @@
 extends base.pug
 block content
-  h1=video.title
-  h2=video.id
+  h1 #{video.title}(id: #{video.id})
   small=video.createdAt
+  br
+  small by #{owner.name}(#{video.owner})
   video(src=`/${video.fileUrl}`, controls=true)
   h3 #{video.meta.views} view#{video.meta.views == 1 ? '' : 's'}
   ul
     each hashtag in video.hashtags
       li=hashtag
-  a(href=`${video.id}/edit`) Edit Video &rarr;
-  br
-  a(href=`${video.id}/delete`) Delete Video &rarr;
+  if String(video.owner) === String(loggedInUser._id)
+    a(href=`${video.id}/edit`) Edit Video &rarr;
+    br
+    a(href=`${video.id}/delete`) Delete Video &rarr;
   

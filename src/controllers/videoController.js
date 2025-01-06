@@ -1,4 +1,5 @@
 import Video from "../models/Video";
+import User from "../models/User";
 
 const fakeUser = {
   username: "Doh",
@@ -24,9 +25,13 @@ export const watch = async (req, res) => {
   if (!video) {
     return res.render("404", { title: "Video not found." });
   }
+
+  const owner = await User.findById(video.owner);
+
   return res.render("watch", {
     title: "Watching Video",
     user: fakeUser,
+    owner,
     video,
   });
 };
@@ -74,6 +79,9 @@ export const getUpload = (req, res) => {
 };
 
 export const postUpload = async (req, res) => {
+  const {
+    user: { _id },
+  } = req.session;
   const { title, description, hashtags } = req.body;
   const { path: fileUrl } = req.file;
   try {
@@ -81,6 +89,7 @@ export const postUpload = async (req, res) => {
       title,
       description,
       fileUrl,
+      owner: _id,
       hashtags: Video.formatHashtags(hashtags),
     });
     return res.redirect("/");
