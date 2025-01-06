@@ -1,7 +1,16 @@
 import User from "../models/User";
 import bcrypt from "bcrypt";
 
-export const see = (req, res) => res.send("See User");
+export const see = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+
+  if (!user) {
+    return res.status(404).render("404", { title: "User not found." });
+  }
+
+  return res.render("profile", { title: user.name, user });
+};
 
 export const logout = (req, res) => {
   req.session.destroy();

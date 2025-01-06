@@ -19,6 +19,8 @@ html(lang="ko")
               a(href="/video/upload") Upload
             li
               a(href="/user/edit") Edit Profile
+            li
+              a(href=`/user/${loggedInUser._id}`) My Profile
           else
             li
               a(href="/login") Login          
