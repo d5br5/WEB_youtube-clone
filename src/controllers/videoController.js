@@ -80,6 +80,7 @@ export const postUpload = async (req, res) => {
       title,
       description,
       hashtags: Video.formatHashtags(hashtags),
+      fileUrl: req.file.path,
     });
     return res.redirect("/");
   } catch (e) {

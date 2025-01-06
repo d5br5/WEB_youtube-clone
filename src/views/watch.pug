@@ -3,6 +3,7 @@ block content
   h1=video.title
   h2=video.id
   small=video.createdAt
+  video(src=`/${video.fileUrl}`, controls=true)
   h3 #{video.meta.views} view#{video.meta.views == 1 ? '' : 's'}
   ul
     each hashtag in video.hashtags

@@ -15,6 +15,10 @@ const videoSchema = new mongoose.Schema({
     minLenfth: 5,
     maxLenfth: 80,
   },
+  fileUrl: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: true,
