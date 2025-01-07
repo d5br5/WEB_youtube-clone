@@ -3,7 +3,10 @@ include mixins/video
 
 block content
   if user.avatarUrl
-    img(src="/"+user.avatarUrl, alt="Avatar", width="100", height="100", style="object-fit:cover")
+    img(src=(user.avatarUrl.startsWith("https://")?user.avatarUrl:"/"+user.avatarUrl) , alt="Avatar", width="100", height="100", style="object-fit:cover")
   h1=user.name
-  each video in videos
+  h2 Videos
+  each video in user.videos
     +video(video)
+  else
+    h3 No videos yet.

@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   location: String,
   socialOnly: { type: Boolean, default: false },
+  videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }],
 });
 
 userSchema.pre("save", async function () {
@@ -16,7 +17,9 @@ userSchema.pre("save", async function () {
 });
 
 userSchema.static("hashPassword", async function (password) {
-  return await bcrypt.hash(password, 5);
+  if (this.isModified("password")) {
+    return await bcrypt.hash(password, 5);
+  }
 });
 
 const User = mongoose.model("User", userSchema);
