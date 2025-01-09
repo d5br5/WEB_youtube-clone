@@ -8,7 +8,9 @@ const fakeUser = {
 
 export const home = async (req, res) => {
   try {
-    const videos = await Video.find({}).sort({ createdAt: "desc" });
+    const videos = await Video.find({})
+      .sort({ createdAt: "desc" })
+      .populate("owner");
     return res.render("home", {
       title: "Wetube Home",
       user: fakeUser,
