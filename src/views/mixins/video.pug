@@ -1,10 +1,8 @@
-mixin video(info)
-  div
-    h4
-      a(href=`/video/${info.id}`)=info.title
-    p=info.description
-    ul
-      each hashtag in info.hashtags
-        li=hashtag
-    small=info.createdAt
-    hr
+mixin video(video)
+    a(href=`/video/${video.id}`).video-mixin
+        //- div.video-mixin__thumb(style=`background-image:url(${video.thumbUrl});background-size:cover;background-position:center;`)
+        div.video-mixin__data
+            span.video-mixin__title=video.title
+            div.video-mixin__meta
+                span #{video.owner.name} • 
+                span #{video.meta.views} 회

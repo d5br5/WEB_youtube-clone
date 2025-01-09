@@ -10,3 +10,14 @@ block content
     +video(video)
   else
     h3 No videos yet.
+
+block content
+    div.profile__data
+        if user.avatarUrl
+            img(src=(user.avatarUrl.startsWith("https://")?user.avatarUrl:"/"+user.avatarUrl)).avatar
+        h3=user.name
+    div.video-grid
+        each video in user.videos
+            +video(video)
+        else
+            span.empty__message No videos found
