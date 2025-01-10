@@ -1,7 +1,7 @@
 extends base
 
 block content
-    div
+    div#videoContainer
         video(src="/" + video.fileUrl, controls, style="width: 100%;")
         div 
             button#play Play 
@@ -13,6 +13,7 @@ block content
                 span#totalTime 00:00:00
             div 
                 input(type="range", id="timeline", min="0", step="1", value=0)
+            button#fullscreen Full Screen
     //- div
     //-     p=video.description
     //-     small=video.createdAt
