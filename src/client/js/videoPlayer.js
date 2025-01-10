@@ -114,4 +114,3 @@ timeline.addEventListener("mouseup", handleTimelineMouseUp);
 fullscreen.addEventListener("click", handleFullscreen);
 video.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mousemove", handleMouseMove);
-videoContainer.addEventListener("mouseleave", setHideControlTimeout);
