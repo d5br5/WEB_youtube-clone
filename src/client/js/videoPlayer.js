@@ -6,15 +6,19 @@ const volumeRange = document.getElementById("volume");
 
 const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
+const timeline = document.getElementById("timeline");
 
 let userVolume = 0.5;
-video.volume = 0.5;
+let isPlaying = false;
+video.volume = userVolume;
 
 const handlePlayClick = () => {
   if (video.paused) {
     video.play();
+    isPlaying = true;
   } else {
     video.pause();
+    isPlaying = false;
   }
   play.innerText = video.paused ? "Play" : "Pause";
 };
@@ -44,10 +48,28 @@ const formatTime = (seconds) =>
 
 const handleMetadata = () => {
   totalTime.innerText = formatTime(video.duration);
+  timeline.max = Math.floor(video.duration);
 };
 
 const updateCurrentTime = (e) => {
   currentTime.innerText = formatTime(video.currentTime);
+  timeline.value = Math.floor(video.currentTime);
+};
+
+const handleTimelineChange = (event) => {
+  const { value } = event.target;
+  video.currentTime = value;
+};
+
+const handleTimelineMouseDown = () => {
+  console.log(isPlaying);
+  video.pause();
+};
+
+const handleTimelineMouseUp = (event) => {
+  if (isPlaying) {
+    video.play();
+  }
 };
 
 play.addEventListener("click", handlePlayClick);
@@ -57,3 +79,6 @@ video.readyState
   ? handleMetadata()
   : video.addEventListener("loadedmetadata", handleMetadata);
 video.addEventListener("timeupdate", updateCurrentTime);
+timeline.addEventListener("input", handleTimelineChange);
+timeline.addEventListener("mousedown", handleTimelineMouseDown);
+timeline.addEventListener("mouseup", handleTimelineMouseUp);
