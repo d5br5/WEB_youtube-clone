@@ -39,22 +39,15 @@ const handleVolumeChange = (event) => {
   video.volume = value;
 };
 
-const parseTime = (time) => {
-  const minutes = Math.floor(time / 60)
-    .toString()
-    .padStart(2, "0");
-  const seconds = Math.floor(time % 60)
-    .toString()
-    .padStart(2, "0");
-  return `${minutes}:${seconds}`;
-};
+const formatTime = (seconds) =>
+  new Date(seconds * 1000).toISOString().substring(11, 19);
 
 const handleMetadata = () => {
-  totalTime.innerText = parseTime(video.duration);
+  totalTime.innerText = formatTime(video.duration);
 };
 
 const updateCurrentTime = (e) => {
-  currentTime.innerText = parseTime(video.currentTime);
+  currentTime.innerText = formatTime(video.currentTime);
 };
 
 play.addEventListener("click", handlePlayClick);
