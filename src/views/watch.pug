@@ -3,7 +3,7 @@ extends base
 block content
     div#videoContainer
         video(src="/" + video.fileUrl, controls, style="width: 100%;")
-        div 
+        div#videoControls
             button#play Play 
             button#mute Mute
             input(type="range", id="volume", min="0", max="1", step="0.01", value=0.5)
