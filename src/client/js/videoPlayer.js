@@ -113,6 +113,12 @@ const handleMouseMove = () => {
   setHideControlTimeout();
 };
 
+const handleEnded = () => {
+  fetch(`/api/video/${video.id}/view`, {
+    method: "POST",
+  });
+};
+
 play.addEventListener("click", handlePlayClick);
 mute.addEventListener("click", handleMuteClick);
 volumeRange.addEventListener("input", handleVolumeChange);
@@ -120,6 +126,8 @@ video.readyState
   ? handleMetadata()
   : video.addEventListener("loadedmetadata", handleMetadata);
 video.addEventListener("timeupdate", updateCurrentTime);
+video.addEventListener("ended", handleEnded);
+
 timeline.addEventListener("input", handleTimelineChange);
 timeline.addEventListener("mousedown", handleTimelineMouseDown);
 timeline.addEventListener("mouseup", handleTimelineMouseUp);
