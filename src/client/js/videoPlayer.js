@@ -84,14 +84,19 @@ const handleTimelineMouseUp = (event) => {
   }
 };
 
+const updateFullscreenIcon = () => {
+  fullScreenIcon.classList = document.fullscreenElement
+    ? "fas fa-compress"
+    : "fas fa-expand";
+};
+
 const handleFullscreen = () => {
   if (document.fullscreenElement) {
     document.exitFullscreen();
-    fullScreenIcon.classList = "fas fa-expand";
   } else {
     videoContainer.requestFullscreen();
-    fullScreenIcon.classList = "fas fa-compress";
   }
+  updateFullscreenIcon();
 };
 
 const setHideControlTimeout = () => {
@@ -120,3 +125,4 @@ timeline.addEventListener("mousedown", handleTimelineMouseDown);
 timeline.addEventListener("mouseup", handleTimelineMouseUp);
 fullScreenIcon.addEventListener("click", handleFullscreen);
 videoContainer.addEventListener("mousemove", handleMouseMove);
+document.addEventListener("fullscreenchange", updateFullscreenIcon);
