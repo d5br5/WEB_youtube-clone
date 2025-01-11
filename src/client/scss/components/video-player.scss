@@ -3,6 +3,7 @@
   position: relative;
   video {
     width: 100%;
+    margin: auto;
   }
   .videoControls {
     opacity: 0;
@@ -46,6 +47,17 @@
           font-size: 20px;
         }
       }
+    }
+  }
+  // Fullscreen 상태에서 중앙 정렬
+  &:fullscreen,
+  &:-webkit-full-screen {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    video {
+      max-width: 100%; /* 화면 비율 유지 */
+      max-height: 100%;
     }
   }
 }
