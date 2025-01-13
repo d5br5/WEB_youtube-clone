@@ -91,6 +91,14 @@ const handleDownload = async () => {
   thumbnailA.download = "MyThumbnail.jpg";
   document.body.appendChild(thumbnailA);
   thumbnailA.click();
+
+  ffmpeg.deleteFile("recording.webm");
+  ffmpeg.deleteFile("output.mp4");
+  ffmpeg.deleteFile("thumbnail.jpg");
+
+  URL.revokeObjectURL(mp4Url);
+  URL.revokeObjectURL(thumbnailUrl);
+  URL.revokeObjectURL(videoFile);
 };
 
 recordBtn.addEventListener("click", handleStart);
