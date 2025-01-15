@@ -1,9 +1,10 @@
 const form = document.getElementById("commentForm");
 
-const addComment = (text) => {
+const addComment = (text, commentId) => {
   const videoComments = document.querySelector(".video__comments ul");
   const newComment = document.createElement("li");
   newComment.className = "video__comment";
+  newComment.dataset.comment_id = commentId;
   const icon = document.createElement("i");
   icon.className = "fas fa-comment";
   const span = document.createElement("span");
@@ -29,7 +30,9 @@ const handleSubmit = async (event) => {
   });
   textarea.value = "";
   if (res.status === 201) {
-    addComment(text);
+    const data = await res.json();
+    const { newCommentId } = data;
+    addComment(text, newCommentId);
   }
 };
 
