@@ -19,6 +19,12 @@ block content
             div
                 span#fullScreen
                     i.fas.fa-expand
+                    
+    if loggedInUser._id
+        div.video__comments
+            form.video__comment-form#commentForm
+                textarea(placeholder="Add a comment", name="comment")
+                button(type="submit") Add Comment
     //- div
     //-     p=video.description
     //-     small=video.createdAt
@@ -31,3 +37,5 @@ block content
         a(href=`${video.id}/delete`) Delete Video &rarr;
 block scripts
     script(src="/static/js/videoPlayer.js")
+    if(loggedInUser)
+        script(src="/static/js/commentSection.js")
