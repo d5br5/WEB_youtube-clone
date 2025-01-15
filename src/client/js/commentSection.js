@@ -7,13 +7,16 @@ const handleSubmit = async (event) => {
   const text = textarea.value;
 
   if (text === "") return;
-  fetch(`/api/video/${video.id}/comment`, {
+  await fetch(`/api/video/${video.id}/comment`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ text }),
   });
+
+  textarea.value = "";
+  window.location.reload();
 };
 
 form?.addEventListener("submit", handleSubmit);
