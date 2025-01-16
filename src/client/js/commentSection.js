@@ -1,4 +1,5 @@
 const form = document.getElementById("commentForm");
+const video = document.querySelector("video");
 
 const addComment = (text, commentId) => {
   const videoComments = document.querySelector(".video__comments ul");
@@ -17,7 +18,7 @@ const addComment = (text, commentId) => {
 const handleSubmit = async (event) => {
   event.preventDefault();
   const textarea = document.querySelector("textarea");
-  const video = document.querySelector("video");
+
   const text = textarea.value;
 
   if (text === "") return;
@@ -37,3 +38,24 @@ const handleSubmit = async (event) => {
 };
 
 form?.addEventListener("submit", handleSubmit);
+
+const comments = document.querySelector(".video__comments ul");
+
+const handleCommentButtonClick = async (e) => {
+  const isButton = e.target.tagName === "BUTTON";
+  if (!isButton) return;
+  const comment = e.target.closest(".video__comment");
+  if (!comment) return;
+  const commentId = comment.dataset.comment_id;
+  const videoId = video.id;
+
+  const res = await fetch(`/api/video/${videoId}/comment/${commentId}`, {
+    method: "DELETE",
+  });
+
+  if (res.status === 200) {
+    comment.remove();
+  }
+};
+
+comments?.addEventListener("click", handleCommentButtonClick);

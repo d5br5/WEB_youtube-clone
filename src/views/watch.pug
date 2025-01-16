@@ -31,6 +31,9 @@ block content
                 li.video__comment(data-comment_id=comment._id)
                     i.fas.fa-comment
                     span  #{comment.text}
+                    if String(comment.owner._id) === String(loggedInUser._id)
+                        button X    
+                    
     //- div
     //-     p=video.description
     //-     small=video.createdAt
